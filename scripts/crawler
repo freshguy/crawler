@@ -1,0 +1,61 @@
+DROP TABLE IF EXISTS `weixinHubPages`;
+CREATE TABLE `weixinHubPages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `homepage_url` varchar(256) NOT NULL,
+  `account_id` varchar(50) NOT NULL,
+  `account_name` varchar(50) NOT NULL,
+  `weixin_hao` varchar(100) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `latest_doc_url` varchar(256) NOT NULL,
+  `latest_doc_id` varchar(100) NOT NULL,
+  `latest_doc_title` varchar(50) NOT NULL,
+  `total_page_num` int(5) NOT NULL DEFAULT '0',
+  `total_doc_num` int(10) NOT NULL DEFAULT '0',
+  `latest_update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `latest_add_item_cnt` int(6) NOT NULL DEFAULT '0',
+  `add_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `enable_crawl` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `crawlDocs`;
+CREATE TABLE `crawlDocs` (
+  `AutoIndex` bigint(20) NOT NULL AUTO_INCREMENT,
+  `AccountId` varchar(50) NOT NULL,
+  `DocId` varchar(50) NOT NULL,
+  `Url` varchar(256) NOT NULL,
+  `Title` varchar(100) NOT NULL,
+  `DocListImg` varchar(256) NOT NULL,
+  `DocProfileImg` varchar(256) NOT NULL COMMENT 'The twisted',
+  `Content` text NOT NULL,
+  `ContentType` enum('TEXT','IMAGE') NOT NULL DEFAULT 'IMAGE',
+  `DocOwnerId` varchar(50) NOT NULL,
+  `DocSubCateId` int(10) unsigned NOT NULL,
+  `AuditStatus` enum('PENDING','AUDITED','REJECT') NOT NULL DEFAULT 'PENDING',
+  `AuditRejectReason` enum('SPAM', 'PORN', 'POLITIC', 'DUPLICATE') NOT NULL,
+  `Auditor` varchar(50) NOT NULL,
+  `DocScore` double NOT NULL DEFAULT '0',
+  `DocHandleStatus` enum('DONE', 'CRAWL_FAILED', 'PARSE_FAILED') NOT NULL,
+  `DocCrawlTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`AutoIndex`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `urls`;
+CREATE TABLE `urls` (
+  `AutoIndex` bigint(20) NOT NULL AUTO_INCREMENT,
+  `UrlHashId` bigint(30) NOT NULL,
+  `Url` varchar(256) NOT NULL,
+  `DocId` varchar(50) NOT NULL,
+  `Title` varchar(100) NOT NULL,
+  `AccountId` varchar(50) NOT NULL,
+  `ExtractUrlTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`AutoIndex`),
+  UNIQUE KEY `UrlHashId` (`UrlHashId`)
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8;
+
+
+
+
+
+

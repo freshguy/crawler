@@ -1,0 +1,51 @@
+# Copyright 2014. Guanjia Inc. All rights reserved
+# Author: wangjuntao@guanjia.com (Wang Juntao)
+
+cc_library(name = 'hubpage_extract_handler',
+      srcs = [
+      'hubpage_extract_handler.cc',
+      ],
+      deps = [
+      '//guanjia/crawler/proto:crawler_servlet_thrift',
+      '//guanjia/crawler/proto:crawler_fetcher_thrift',
+      '//guanjia/crawler/handler:curl_fetcher',
+      '//guanjia/crawler/handler:xml_xpath',
+      '//file:simple_line_writer',
+      '//libs/third_party/jsoncpp:jsoncpp',
+      '//util/mysql_client2:mysql_base',
+      '//util/http_client:http_client',
+      #'//third_party/redis/cpp_client:redis_client',
+      '//guanjia/base/hiredis:hiredis',
+      '//base:base',
+      ],
+      cflags = [
+      ],
+      copt = [
+      ],
+      link_flags = [
+      '-lcurl',
+      ],
+)
+
+cc_binary(name = 'crawler_hubhandle_server',
+      srcs = [
+      'crawler_servlet.cc',
+      'crawler_server.cc',
+      'crawler_server_main.cc',
+      ],
+      deps = [
+      ':hubpage_extract_handler',
+      '//guanjia/crawler/proto:crawler_servlet_thrift',
+      '//news_search/base/json_config:config',
+      '//news_search/base/general_server:general_server',
+      '//util/global_init:global_init',
+      '//util/release:release',
+      '//base:base',
+      ],
+      cflags = [
+      ],
+      copt = [
+      ],
+      link_flags = [
+      ],
+)

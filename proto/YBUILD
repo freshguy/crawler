@@ -1,0 +1,31 @@
+# Copyright 2014. Guanjia Inc. All rights reserved
+# Author: wangjuntao@guanjia.com (Wang Juntao)
+
+thrift_library(name = 'crawler_base_thrift',
+      srcs = [
+      'crawler_base.thrift',
+      ],
+      deps = [
+      ],
+      gen_cpp = 1,
+)
+
+thrift_library(name = 'crawler_servlet_thrift',
+      srcs = [
+      'crawler_servlet.thrift',
+      ],
+      deps = [
+      ':crawler_base_thrift',
+      ],
+      gen_cpp = 1,
+)
+
+thrift_library(name = 'crawler_fetcher_thrift',
+      srcs = [
+      'crawler_fetcher.thrift',
+      ],
+      deps = [
+      ':crawler_base_thrift',
+      ],
+      gen_cpp = 1,
+)

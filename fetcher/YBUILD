@@ -1,0 +1,75 @@
+# Copyright 2014. Guanjia Inc. All rights reserved
+# Author: wangjuntao@guanjia.com (Wang Juntao)
+
+cc_library(name = 'crawler_fetcher_handler',
+      srcs = [
+      'crawler_fetcher_handler.cc',
+      ],
+      deps = [
+      '//guanjia/crawler/proto:crawler_fetcher_thrift',
+      '//guanjia/crawler/parser/public:page_normalizer',
+      '//guanjia/crawler/handler:curl_fetcher',
+      '//guanjia/crawler/handler:xml_xpath',
+      '//file:simple_line_reader',
+      '//libs/third_party/jsoncpp:jsoncpp',
+      '//util/mysql_client2:mysql_base',
+      '//util/http_client:http_client',
+      #'//third_party/redis/cpp_client:redis_client',
+      '//guanjia/base/hiredis:hiredis',
+      '//file:file',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/include/ImageMagick',
+      '-g',
+      '-O2',
+      '-fstack-protector',
+      '--param=ssp-buffer-size=4',
+      '-Wformat',
+      '-Wformat-security',
+      '-pthread',
+      ],
+      link_flags = [
+      '-luuid',
+      '-lcurl',
+      '-lMagick++',
+      '-lMagickWand',
+      '-lMagickCore',
+      ],
+)
+
+cc_binary(name = 'crawler_fetcher_server',
+      srcs = [
+      'crawler_fetcher_servlet.cc',
+      'crawler_fetcher_server.cc',
+      'crawler_fetcher_server_main.cc',
+      ],
+      deps = [
+      ':crawler_fetcher_handler',
+      '//guanjia/crawler/proto:crawler_fetcher_thrift',
+      '//news_search/base/json_config:config',
+      '//news_search/base/general_server:general_server',
+      '//util/global_init:global_init',
+      '//util/release:release',
+      '//base:base',
+      ],
+      cflags = [
+      '-I/usr/include/ImageMagick',
+      '-g',
+      '-O2',
+      '-fstack-protector',
+      '--param=ssp-buffer-size=4',
+      '-Wformat',
+      '-Wformat-security',
+      '-pthread',
+      ],
+      copt = [
+      ],
+      link_flags = [
+      '-luuid',
+      '-lcurl',
+      '-lMagick++',
+      '-lMagickWand',
+      '-lMagickCore',
+      ],
+)

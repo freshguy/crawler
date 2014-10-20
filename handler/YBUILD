@@ -1,0 +1,48 @@
+# Copyright 2014. Guanjia Inc. All rights reserved
+# Author: wangjuntao@guanjia.com (Wang Juntao)
+
+cc_library(name = 'curl_fetcher',
+      srcs = [
+      'curl_fetcher.cc',
+      ],
+      deps = [
+      '//file:file',
+      '//util/url_parser:yurl',
+	  '//base:base',
+      ],
+      link_flags = [
+      '-lcurl',
+      ],
+)
+
+cc_library(name = 'xml_xpath',
+      srcs = [
+      'xml_xpath.cc',
+      ],
+      deps = [
+      '//util/utf8_converter:utf8_converter',
+      '//third_party/tinyxml:tiny_xml',
+      '//libs/third_party/libxml:xml2',
+      '//libs/third_party/libxml:z',
+	  '//base:base',
+      ],
+      link_flags = [
+      ],
+)
+
+cc_test(name = 'curl_fetcher_unittest',
+      srcs = [
+      'curl_fetcher_unittest.cc',
+      ],
+      deps = [
+      ':curl_fetcher',
+      ':xml_xpath',
+      '//guanjia/base/pugixml/src:pugixml',
+      '//libs/third_party/jsoncpp:jsoncpp',
+      '//third_party/tinyxml:tiny_xml',
+      '//base:base',
+      ],
+      link_flags = [
+      '-lcurl',
+      ],
+)
